@@ -60,6 +60,11 @@ export default {
           accent: "hsl(var(--ai-accent))",
           surface: "hsl(var(--ai-surface))",
         },
+        column: {
+          todo: "hsl(var(--column-todo))",
+          progress: "hsl(var(--column-progress))",
+          done: "hsl(var(--column-done))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -90,20 +95,25 @@ export default {
           to: { transform: "translateX(0)" },
         },
         "fade-in": {
-          from: { opacity: "0" },
-          to: { opacity: "1" },
+          from: { opacity: "0", transform: "translateY(4px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
         },
         "pulse-dot": {
           "0%, 100%": { opacity: "0.4" },
           "50%": { opacity: "1" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "slide-in-right": "slide-in-right 0.3s ease-out",
-        "fade-in": "fade-in 0.2s ease-out",
+        "fade-in": "fade-in 0.3s ease-out",
         "pulse-dot": "pulse-dot 1.5s ease-in-out infinite",
+        shimmer: "shimmer 2s linear infinite",
       },
     },
   },
