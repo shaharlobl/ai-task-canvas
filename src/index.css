@@ -43,6 +43,10 @@
     --ai-accent: 217 91% 60%;
     --ai-surface: 217 91% 97%;
 
+    --column-todo: 245 58% 51%;
+    --column-progress: 38 92% 50%;
+    --column-done: 160 84% 39%;
+
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 240 6% 10%;
     --sidebar-primary: 240 5% 16%;
@@ -89,6 +93,10 @@
     --ai-accent: 217 91% 60%;
     --ai-surface: 217 30% 14%;
 
+    --column-todo: 245 58% 60%;
+    --column-progress: 38 92% 55%;
+    --column-done: 160 84% 45%;
+
     --sidebar-background: 240 6% 7%;
     --sidebar-foreground: 0 0% 95%;
     --sidebar-primary: 217 91% 60%;
@@ -126,4 +134,41 @@
     background: hsl(var(--border));
     border-radius: 2px;
   }
+
+  .dot-grid {
+    background-image: radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .gradient-border-focus {
+    position: relative;
+  }
+  .gradient-border-focus::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, hsl(var(--ai-accent)), hsl(270 80% 60%), hsl(var(--ai-accent)));
+    background-size: 200% 200%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s;
+    animation: gradient-shift 3s ease infinite;
+  }
+  .gradient-border-focus:focus-within::before {
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }

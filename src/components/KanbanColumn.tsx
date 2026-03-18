@@ -8,23 +8,42 @@ import { Plus } from 'lucide-react';
 interface KanbanColumnProps {
   id: TaskStatus;
   title: string;
+  color: string;
   tasks: Task[];
   onEdit: (task: Task) => void;
   onDelete: (id: string) => void;
   onAddTask: (status: TaskStatus) => void;
 }
 
-export function KanbanColumn({ id, title, tasks, onEdit, onDelete, onAddTask }: KanbanColumnProps) {
+const dotColors: Record<string, string> = {
+  'column-todo': 'bg-column-todo',
+  'column-progress': 'bg-column-progress',
+  'column-done': 'bg-column-done',
+};
+
+const badgeBg: Record<string, string> = {
+  'column-todo': 'bg-column-todo/10 text-column-todo',
+  'column-progress': 'bg-column-progress/10 text-column-progress',
+  'column-done': 'bg-column-done/10 text-column-done',
+};
+
+export function KanbanColumn({ id, title, color, tasks, onEdit, onDelete, onAddTask }: KanbanColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id });
 
   return (
     <div className="flex flex-col min-h-0 flex-1">
       <div className="flex items-center justify-between px-1 mb-3">
         <div className="flex items-center gap-2">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          <span className={cn('w-2.5 h-2.5 rounded-full', dotColors[color])} />
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground">
             {title}
           </h3>
-          <span className="text-xs text-muted-foreground/60 font-mono">{tasks.length}</span>
+          <span className={cn(
+            'text-[10px] font-mono px-1.5 py-0.5 rounded-full',
+            badgeBg[color]
+          )}>
+            {tasks.length}
+          </span>
         </div>
         <button
           onClick={() => onAddTask(id)}
@@ -36,8 +55,8 @@ export function KanbanColumn({ id, title, tasks, onEdit, onDelete, onAddTask }: 
       <div
         ref={setNodeRef}
         className={cn(
-          'flex-1 rounded-lg p-1 space-y-1.5 overflow-y-auto scrollbar-thin transition-colors min-h-[120px]',
-          isOver && 'bg-accent/5 ring-1 ring-accent/20'
+          'flex-1 rounded-lg p-1.5 space-y-2 overflow-y-auto scrollbar-thin transition-all duration-200 min-h-[120px]',
+          isOver && 'bg-accent/5 ring-2 ring-dashed ring-accent/30 scale-[1.01]'
         )}
       >
         <SortableContext items={tasks.map(t => t.id)} strategy={verticalListSortingStrategy}>

@@ -21,8 +21,23 @@ export interface ChatMessage {
   created_at: string;
 }
 
-export const COLUMNS: { id: TaskStatus; title: string }[] = [
-  { id: 'todo', title: 'To Do' },
-  { id: 'in_progress', title: 'In Progress' },
-  { id: 'completed', title: 'Completed' },
+export const COLUMNS: { id: TaskStatus; title: string; color: string }[] = [
+  { id: 'todo', title: 'To Do', color: 'column-todo' },
+  { id: 'in_progress', title: 'In Progress', color: 'column-progress' },
+  { id: 'completed', title: 'Completed', color: 'column-done' },
 ];
+
+export const CATEGORY_COLORS: Record<string, string> = {
+  design: 'bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300',
+  dev: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
+  research: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
+  marketing: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300',
+  bug: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300',
+  feature: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300',
+  default: 'bg-secondary text-secondary-foreground',
+};
+
+export function getCategoryColor(category: string): string {
+  const key = category.toLowerCase().trim();
+  return CATEGORY_COLORS[key] || CATEGORY_COLORS.default;
+}
