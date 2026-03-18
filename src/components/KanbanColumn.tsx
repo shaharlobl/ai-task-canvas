@@ -15,6 +15,18 @@ interface KanbanColumnProps {
   onAddTask: (status: TaskStatus) => void;
 }
 
+const dotColors: Record<string, string> = {
+  'column-todo': 'bg-column-todo',
+  'column-progress': 'bg-column-progress',
+  'column-done': 'bg-column-done',
+};
+
+const badgeBg: Record<string, string> = {
+  'column-todo': 'bg-column-todo/10 text-column-todo',
+  'column-progress': 'bg-column-progress/10 text-column-progress',
+  'column-done': 'bg-column-done/10 text-column-done',
+};
+
 export function KanbanColumn({ id, title, color, tasks, onEdit, onDelete, onAddTask }: KanbanColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id });
 
@@ -22,13 +34,13 @@ export function KanbanColumn({ id, title, color, tasks, onEdit, onDelete, onAddT
     <div className="flex flex-col min-h-0 flex-1">
       <div className="flex items-center justify-between px-1 mb-3">
         <div className="flex items-center gap-2">
-          <span className={cn('w-2.5 h-2.5 rounded-full', `bg-${color}`)} />
+          <span className={cn('w-2.5 h-2.5 rounded-full', dotColors[color])} />
           <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground">
             {title}
           </h3>
           <span className={cn(
             'text-[10px] font-mono px-1.5 py-0.5 rounded-full',
-            `bg-${color}/10 text-${color}`
+            badgeBg[color]
           )}>
             {tasks.length}
           </span>
